@@ -6,7 +6,9 @@ Este repositório contém um script de automação para compilar e instalar o **
 - **Patch de Código**: Comenta automaticamente blocos de afinidade de CPU (`pthread_setaffinity_np`) que causam erro no Android
 - **Linker Corrigido**: Resolve o erro de símbolo `__cxa_init_primary_exception` forçando o link com `libc++_shared`
 - **Otimização**: Configurado para usar **OpenBLAS** e compilação em 1 núcleo para evitar travamentos de RAM
-
+**Créditos**
+  https://t.me/cybe4
+  
 ## Como Instalar
 
 1. Abra o Termux e clone este repositório:
