@@ -1,0 +1,60 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+#Atualização agressiva (Instala tudo novo)
+update () {
+echo " Atualizando sistema "
+pkg update -y && pkg upgrade -y -o Dpkg::Options::="--force-confnew"
+}
+
+#Dependências
+dep () {
+echo "Instalando ferramentas "
+pkg install -y git cmake ninja clang libopenblas python
+}
+
+#Limpeza e Clone
+dow () {
+cd ~
+rm -rf CTranslate2
+echo "--- 3. Clonando CTranslate2 ---"
+git clone --recursive https://github.com/OpenNMT/CTranslate2.git
+cd CTranslate2
+}
+
+#A Cirurgia (Padrão robusto)
+patch () {
+echo "Aplicando correção no código "
+sed -i '/pthread_setaffinity_np/,/}/ s/^/\/\//' src/thread_pool.cc
+}
+
+conf () {
+#Build com Linker Corrigido
+echo "Configurando CMake "
+mkdir -p build && cd build
+cmake .. \
+  -DCMAKE_INSTALL_PREFIX=$PREFIX \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DWITH_MKL=OFF \
+  -DWITH_OPENBLAS=ON \
+  -DOPENBLAS_LIBRARIES=$PREFIX/lib/libopenblas.so \
+  -DOPENBLAS_INCLUDE_DIR=$PREFIX/include \
+  -DCMAKE_CXX_FLAGS="-I$PREFIX/include/openblas -D_GNU_SOURCE" \
+  -DCMAKE_EXE_LINKER_FLAGS="-lc++_shared" \
+  -DCMAKE_SHARED_LINKER_FLAGS="-lc++_shared" \
+  -DOPENMP_RUNTIME=NONE \
+  -DCPU_ISA_DISPATCH=OFF \
+  -DLIB_ANDROID_POSIX_SEMAPHORE=ON \
+  -GNinja
+}
+
+#Compilação e Instalação
+
+comp () {
+echo "Compilando (Ninja) "
+ninja -j 1 && ninja install
+
+echo "--- 7. Teste de Fogo ---"
+ct2-translator --help
+}
+
+update && dep && dow && patch && conf && comp
