@@ -1,6 +1,6 @@
 # CTranslate2 no Termux (Android) 
 
-Este repositório contém um script de automação para compilar e instalar o **CTranslate2** nativamente no Android usando o Termux. O processo inclui correções automáticas (patching) para compatibilidade com o kernel Android e otimização via OpenBLAS.
+Este repositório contém um script de automação para compilar e instalar o **CTranslate2** nativamente no Android usando o Termux. O processo inclui correções automáticas (patching) para compatibilidade com o kernel Android e otimização via OpenBLAS (`libopenblas`)
 
 ## Características do Script
 - **Patch de Código**: Comenta automaticamente blocos de afinidade de CPU (`pthread_setaffinity_np`) que causam erro no Android
