@@ -16,3 +16,11 @@ Este repositório contém um script de automação para compilar e instalar o **
    git clone https://github.com/qrt2/termux_CTranslate2
    cd termux_CTranslate2 && chmod +x install_CTrasnlate2 
     ./install_CTrasnlate2
+**Como usar o Tradutor**
+​Após a conclusão, você pode verificar a instalação com o comando:
+`ct2-translator --help`
+
+   **Requisitos**
+​Espaço em disco: ~2GB (durante a compilação)
+​Tempo: 15 a 30 minutos (dependendo do processador)
+​Bateria: Recomendado manter o carregador conectado
